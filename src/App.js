@@ -1,17 +1,27 @@
-import React from "react";
-import Form from './components/Form'
+import React, { useState } from "react";
+import FormComponent from "./components/FormComponent";
 
 import { Container, Row, Col } from "react-bootstrap";
 
 function App() {
+    const [user, setUser] = useState({
+        id: null,
+        pw: null,
+    });
     return (
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col>
-            <Form />
-          </Col>
-        </Row>
-      </Container>
+        <Container>
+            {user.id && user.pw ? (
+                <Row>
+                    <Col></Col>
+                </Row>
+            ) : (
+                <Row className="justify-content-md-center">
+                    <Col>
+                        <FormComponent user={user} setUser={setUser} />
+                    </Col>
+                </Row>
+            )}
+        </Container>
     );
 }
 
