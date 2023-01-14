@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import FormComponent from "./components/FormComponent";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import ChatComponent from "./components/ChatComponent";
 
 function App() {
+
     const [user, setUser] = useState({
-        id: null,
-        pw: null,
+        id: "",
+        pw: "",
     });
+    
     return (
-        <Container>
-            {user.id && user.pw ? (
-                <Row>
-                    <Col></Col>
-                </Row>
+        <Container className="col-md-5 mx-auto">
+            {user.id.length !== 0 && user.pw.length !== 0 ? (
+                <ChatComponent setUser={setUser} />
             ) : (
-                <Row className="justify-content-md-center">
-                    <Col>
-                        <FormComponent user={user} setUser={setUser} />
-                    </Col>
-                </Row>
+                <FormComponent user={user} setUser={setUser} />
             )}
         </Container>
     );
