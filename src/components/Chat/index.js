@@ -10,7 +10,7 @@ export default ({user, setUser}) => {
         <Container>
             <ChatTop user={user} setUser={setUser} />
             <ChatList />
-            <ChatForm user={user} />
+            <ChatForm userId={user.id} />
         </Container>
     );
 };

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, Container, Form, Stack } from "react-bootstrap";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addChat } from "../../store/chat";
 
-export default ({ user }) => {
+export default ({ userId }) => {
     const {
         register,
         handleSubmit,
@@ -10,7 +13,21 @@ export default ({ user }) => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = () => {};
+    const dispatch = useDispatch();
+
+    // const [chatContent, setChatContent] = useState('');
+
+    const onSubmit = async (data) => {
+        const { chatContent } = data;
+        await axios.post("http://localhost:3000/chat", {
+            userId,
+            chatContent,
+        }).catch(err => console.error(err));
+        await axios
+            .get("http://localhost:3000/chat")
+            .then((res) => res.data)
+            .then((data) => dispatch(addChat(data)));
+    };
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -18,7 +35,7 @@ export default ({ user }) => {
                 <Form.Group>
                     <Controller
                         control={control}
-                        name="content"
+                        name="chatContent"
                         defaultValue=""
                         render={({ field: { onChange, value, ref } }) => (
                             <Form.Control
@@ -31,7 +48,7 @@ export default ({ user }) => {
                         )}
                     />
                 </Form.Group>
-                <Button type="button">Send</Button>
+                <Button type="submit">Send</Button>
             </Stack>
         </Form>
     );
