@@ -21,12 +21,21 @@ const chatBubble = css`
 
 const bubbleContainer = css``;
 
-function List({ id, chatContent }) {
+const infoContainer = css`
+    display: flex;
+    flex-direction: row;
+`
+
+function List({ id, chatContent, time }) {
     return (
         <div css={chatContainer}>
             <div css={bubbleContainer}>
                 <div>{id}</div>
-                <div css={chatBubble}>{chatContent}</div>
+                <div css={infoContainer}>
+                    <div css={chatBubble}>{chatContent}</div>
+                    <div>{time}</div>
+                </div>
+                
             </div>
         </div>
     );
@@ -52,7 +61,7 @@ export default () => {
     return (
         <div>
             {chat.map((data, i) => {
-                return <List id={data.userId} chatContent={data.chatContent} />;
+                return <List id={data.userId} chatContent={data.chatContent} time={data.time} />;
             })}
         </div>
     );
