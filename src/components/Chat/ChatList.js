@@ -41,6 +41,13 @@ function List({ id, chatContent, time }) {
     );
 }
 
+const listContainer=css`
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    color: #e1e1e1;
+`
+
 export default () => {
     const chat = useSelector((state) => state.chat);
     const dispatch = useDispatch();
@@ -59,7 +66,7 @@ export default () => {
     }, []);
 
     return (
-        <div>
+        <div css={listContainer}>
             {chat.map((data, i) => {
                 return <List id={data.userId} chatContent={data.chatContent} time={data.time} />;
             })}
