@@ -1,5 +1,22 @@
+/** @jsxImportSource @emotion/react */
+
 import React from "react";
-import { Container, Button, Stack } from "react-bootstrap";
+import { jsx, css } from "@emotion/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faBars } from "@fortawesome/free-solid-svg-icons";
+
+const container = css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    > button {
+        background-color: rgba(0,0,0,0);
+        border:none;
+        > svg {
+            color: #fff
+        }
+    }
+`;
 
 export default ({ user, setUser }) => {
     const logout = () => {
@@ -9,13 +26,14 @@ export default ({ user, setUser }) => {
         });
     };
     return (
-        <Container>
-            <Stack direction="horizontal" className="justify-content-between">
-                <div>{user.id}</div>
-                <Button variant="outline-danger" onClick={logout}>
-                    Log Out
-                </Button>
-            </Stack>
-        </Container>
+        <div css={container}>
+            <button variant="outline-danger" onClick={logout}>
+                <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <div>{user.id}</div>
+            <button>
+                <FontAwesomeIcon icon={faBars} />
+            </button>
+        </div>
     );
 };

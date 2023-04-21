@@ -1,7 +1,36 @@
+/** @jsxImportSource @emotion/react */
+
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 
-import { Button, Form, Stack } from "react-bootstrap";
+import { jsx, css } from "@emotion/react";
+
+const container = css`
+    padding: 100px;
+    background-color:  #003488;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+const title = css`
+    color: #fff;
+    font-size: 20px;
+    padding: 20px
+`
+
+const formContainer = css`
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+`
+
+const inputContainer = css`
+    display:flex;
+    flex-direction: column;
+    margin: 10px 0;
+`
 
 export default ({ user, setUser }) => {
     const {
@@ -20,58 +49,19 @@ export default ({ user, setUser }) => {
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Stack gap={3} >
-                <Form.Group className="mb-3" controlId="formID">
-                    <Form.Label>ID</Form.Label>
-                    <Controller
-                        control={control}
-                        name="id"
-                        defaultValue=""
-                        render={({
-                            field: { onChange, onBlur, value, ref },
-                        }) => (
-                            <Form.Control
-                                type="text"
-                                onChange={onChange}
-                                value={value}
-                                ref={ref}
-                                isInvalid={errors.id}
-                                placeholder="Enter ID"
-                            />
-                        )}
+        <div css={container}>
+            <div css={title}>Chat</div>
+            <form css={formContainer} onSubmit={handleSubmit(onSubmit)}>
+                <div css={inputContainer}>
+                    <input type="text" placeholder="ID" {...register("id")} />
+                    <input
+                        type="password"
+                        placeholder="PASSWORD"
+                        {...register("pw")}
                     />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.id?.message}
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formPW">
-                    <Form.Label>Password</Form.Label>
-                    <Controller
-                        control={control}
-                        name="pw"
-                        defaultValue=""
-                        render={({
-                            field: { onChange, onBlur, value, ref },
-                        }) => (
-                            <Form.Control
-                                type="password"
-                                onChange={onChange}
-                                value={value}
-                                ref={ref}
-                                isInvalid={errors.pw}
-                                placeholder="Enter Password"
-                            />
-                        )}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.pw?.message}
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-                <Button type="submit">Login</Button>
-            </Stack>
-        </Form>
+                </div>
+                <button type="submit">로그인</button>
+            </form>
+        </div>
     );
 };
