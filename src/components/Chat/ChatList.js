@@ -13,7 +13,7 @@ const chatContainer = css`
 `;
 
 const chatBubble = css`
-    padding: 0px 10px;
+    padding: 3px 10px;
     border-radius: 30px;
     background-color: #a0c4ff;
     color: black;
@@ -24,6 +24,8 @@ const bubbleContainer = css``;
 const infoContainer = css`
     display: flex;
     flex-direction: row;
+    gap: 10px;
+    align-items: flex-end;
 `
 
 function List({ id, chatContent, time }) {
@@ -43,7 +45,7 @@ function List({ id, chatContent, time }) {
 
 const listContainer=css`
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 10px;
     color: #e1e1e1;
 `
@@ -53,16 +55,40 @@ export default () => {
     const dispatch = useDispatch();
 
     const getData = async () => {
-        const res = await axios.get("http://localhost:3000/chat");
-        const chatData = await res.data.chats;
-        await dispatch(addChat(chatData));
-        await console.log(chat);
+        if (chat.length === 0){
+            const res = await axios.get("http://localhost:3000/chat");
+            const chatData = await res.data.chats;
+            await dispatch(addChat(chatData));
+        } else {
+            console.log(chat[chat.length - 1].id)
+            const res = await axios.get(`http://localhost:3000/chat/${chat[chat.length - 1].id}`)
+            const chatData = await res.data.chats;
+            await console.log(chatData)
+            await dispatch(addChat(chatData));
+        }
     };
 
-    useInterval(getData, 1000);
+    // const polling = async (location, callback) => {
+    //     const res = await axios.get(location);
+    //     const {status, data} = res;
+
+    //     if(status === 502){
+    //         await polling(location, callback)
+    //     }else if(status !== 200){
+    //         await new Promise(resolve => setTimeout(resolve, 1000));
+    //         await polling(location, callback)
+    //     }else{ // status 200 : good
+    //         await polling(location, callback);
+    //     }
+    // }
+
+    useInterval(getData,1000)
 
     useEffect(() => {
-        getData();
+        // polling('http://localhost:3000/chat', (data)=>{
+        //     dispatch(addChat(data))
+        // })
+        getData()
     }, []);
 
     return (

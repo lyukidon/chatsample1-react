@@ -5,7 +5,9 @@ export const chatSlice = createSlice({
     initialState:[],
     reducers: {
         addChat: (state, action) => {
-            return [...action.payload]
+            if (action.payload.length !== 0){
+                return [...state,...action.payload]
+            }
         }
     }
 })
