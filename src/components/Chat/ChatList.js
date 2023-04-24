@@ -50,7 +50,7 @@ const listContainer=css`
     color: #e1e1e1;
 `
 
-export default () => {
+export default ({listRef}) => {
     const chat = useSelector((state) => state.chat);
     const dispatch = useDispatch();
 
@@ -68,28 +68,15 @@ export default () => {
         }
     };
 
-    // const polling = async (location, callback) => {
-    //     const res = await axios.get(location);
-    //     const {status, data} = res;
-
-    //     if(status === 502){
-    //         await polling(location, callback)
-    //     }else if(status !== 200){
-    //         await new Promise(resolve => setTimeout(resolve, 1000));
-    //         await polling(location, callback)
-    //     }else{ // status 200 : good
-    //         await polling(location, callback);
-    //     }
-    // }
-
     useInterval(getData,1000)
 
     useEffect(() => {
-        // polling('http://localhost:3000/chat', (data)=>{
-        //     dispatch(addChat(data))
-        // })
-        getData()
+        getData();
     }, []);
+
+    useEffect(()=>{
+        listRef.current.scrollTop = listRef.current.scrollHeight
+    },[])
 
     return (
         <div css={listContainer}>

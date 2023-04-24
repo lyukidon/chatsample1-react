@@ -28,19 +28,18 @@ const components = css`
 const listContainer = css`
     height: 100%;
     overflow-y: auto;
-
 `
 
 export default ({ user, setUser }) => {
 
-    const listRef = useRef(null)
+    const listRef = useRef(null);
 
     return (
         <div css={container}>
             <div css={components}>
                 <ChatTop user={user} setUser={setUser} />
                 <div css={listContainer} ref={listRef}>
-                    <ChatList />
+                    <ChatList listRef={listRef} />
                 </div>
                 <ChatForm userId={user.id}/>
             </div>

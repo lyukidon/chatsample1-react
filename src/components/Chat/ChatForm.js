@@ -31,6 +31,7 @@ export default ({ userId }) => {
     const { register, handleSubmit, control, formState } = useForm();
 
     const dispatch = useDispatch();
+    const chat = useSelector((state) => state.chat);
 
     const onSubmit = async (data) => {
         const { chatContent } = data;
@@ -41,13 +42,11 @@ export default ({ userId }) => {
             })
             .catch((err) => console.error(err));
         await axios
-            .get("http://localhost:3000/chat")
-            .then((res) => res.data)
-            .then((data) => dispatch(addChat(data)));
+        const res = await axios.get(`http://localhost:3000/chat/${chat[chat.length - 1].id}`)
+        const chatData = await res.data.chats;
+        await console.log(chatData)
+        await dispatch(addChat(chatData));
     };
-    useEffect(() => {
-        console.log(formState.isValid);
-    }, []);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
