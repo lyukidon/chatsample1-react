@@ -6,18 +6,22 @@ import { useForm, Controller } from "react-hook-form";
 import { jsx, css } from "@emotion/react";
 
 const container = css`
-    padding: 100px;
+    height: 100vh;
+    width: 100vw;
     background-color:  #003488;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
 `;
 
 const title = css`
     color: #fff;
     font-size: 20px;
-    padding: 20px
+    padding: 20px;
 `
 
 const formContainer = css`
