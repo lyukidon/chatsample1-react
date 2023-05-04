@@ -68,7 +68,7 @@ export default ({listRef}) => {
         }
     };
 
-    useInterval(getData,1000)
+    useInterval(getData,1500)
 
     useEffect(() => {
         getData();
