@@ -10,7 +10,8 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 import { css, jsx } from "@emotion/react";
 
-const input = css`
+const inputStyle = css`
+    width: 100%;
     background-color: #fff;
     border-radius: 30px;
     border: none;
@@ -19,12 +20,19 @@ const input = css`
 const send = css`
     background-color: #d7e7ff;
     border-radius: 30px;
-    border:none;
+    border: none;
     &:disabled {
         background-color: #a1a1a1;
         color: #6c757d;
         cursor: not-allowed;
     }
+`;
+
+const formStyle = css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 25px;
 `;
 
 export default ({ userId }) => {
@@ -41,17 +49,18 @@ export default ({ userId }) => {
                 chatContent,
             })
             .catch((err) => console.error(err));
-        await axios
-        const res = await axios.get(`http://localhost:3000/chat/${chat[chat.length - 1].id}`)
+        await axios;
+        const res = await axios.get(
+            `http://localhost:3000/chat/${chat[chat.length - 1].id}`
+        );
         const chatData = await res.data.chats;
-        await console.log(chatData)
         await dispatch(addChat(chatData));
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form css={formStyle} onSubmit={handleSubmit(onSubmit)}>
             <input
-                css={input}
+                css={inputStyle}
                 type="text"
                 {...register("chatContent", { required: true })}
             />

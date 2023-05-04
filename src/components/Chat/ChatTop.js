@@ -1,13 +1,33 @@
 /** @jsxImportSource @emotion/react */
 
-import React from "react";
+import React, { useState } from "react";
 import { jsx, css } from "@emotion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faChevronLeft,
     faBars,
     faMagnifyingGlass,
+    faX,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setSearch } from "../../store/search";
+
+function Search() {
+    const dispatch = useDispatch();
+    const search = useSelector((state)=>state.search);
+
+    const onChange = (e) => {
+        const data = e.target.value;
+        dispatch(setSearch(data));
+    };
+
+    return (
+        <div>
+            <input type="text" onChange={onChange} />
+        </div>
+    );
+}
 
 const container = css`
     display: flex;
@@ -29,16 +49,31 @@ export default ({ user, setUser }) => {
             pw: "",
         });
     };
+    const [searchToggle, setSearchToggle] = useState(false);
+
+    const onSearch = () => {
+        setSearchToggle(!searchToggle);
+    };
+
     return (
         <div css={container}>
             <button variant="outline-danger" onClick={logout}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <div>{user.id}</div>
+            {searchToggle ? <Search /> : <div>{user.id}</div>}
             <div>
-                <button>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
+                {searchToggle ? (
+                    <button>
+                        <FontAwesomeIcon icon={faX} onClick={onSearch} />
+                    </button>
+                ) : (
+                    <button>
+                        <FontAwesomeIcon
+                            icon={faMagnifyingGlass}
+                            onClick={onSearch}
+                        />
+                    </button>
+                )}
                 <button>
                     <FontAwesomeIcon icon={faBars} />
                 </button>

@@ -27,21 +27,20 @@ const infoContainer = css`
     gap: 10px;
     align-items: flex-end;
 `
-
-function List({ id, chatContent, time }) {
-    return (
-        <div css={chatContainer}>
-            <div css={bubbleContainer}>
-                <div>{id}</div>
-                <div css={infoContainer}>
-                    <div css={chatBubble}>{chatContent}</div>
-                    <div>{time}</div>
+    function List({ id, chatContent, time }) {
+        return (
+            <div css={chatContainer}>
+                <div css={bubbleContainer}>
+                    <div>{id}</div>
+                    <div css={infoContainer}>
+                        <div css={chatBubble}>{chatContent}</div>
+                        <div>{time}</div>
+                    </div>
+                    
                 </div>
-                
             </div>
-        </div>
-    );
-}
+        );
+    }
 
 const listContainer=css`
     display: flex;
@@ -52,9 +51,11 @@ const listContainer=css`
 
 export default ({listRef}) => {
     const chat = useSelector((state) => state.chat);
+    const search = useSelector((state)=>state.search);
     const dispatch = useDispatch();
 
     const getData = async () => {
+        // console.log(search)
         if (chat.length === 0){
             const res = await axios.get("http://localhost:3000/chat");
             const chatData = await res.data.chats;
@@ -63,7 +64,6 @@ export default ({listRef}) => {
             console.log(chat[chat.length - 1].id)
             const res = await axios.get(`http://localhost:3000/chat/${chat[chat.length - 1].id}`)
             const chatData = await res.data.chats;
-            await console.log(chatData)
             await dispatch(addChat(chatData));
         }
     };
@@ -75,13 +75,13 @@ export default ({listRef}) => {
     }, []);
 
     useEffect(()=>{
-        listRef.current.scrollTop = listRef.current.scrollHeight
-    },[])
+        
+    },[search])
 
     return (
         <div css={listContainer}>
             {chat.map((data, i) => {
-                return <List id={data.userId} chatContent={data.chatContent} time={data.time} />;
+                return <List key={data._id} id={data.userId} chatContent={data.chatContent} time={data.time} />;
             })}
         </div>
     );
