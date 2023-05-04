@@ -20,7 +20,7 @@ const components = css`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 25%;
+    width: 350px;
     background-color: #003488;
     color: #fff;
     height: 80vh;

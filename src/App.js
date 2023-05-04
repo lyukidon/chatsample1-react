@@ -6,8 +6,8 @@ import Chat from "./components/Chat/index";
 function App() {
 
     const [user, setUser] = useState({
-        id: "1",
-        pw: "1",
+        id: "",
+        pw: "",
     });
 
     return (

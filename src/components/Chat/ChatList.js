@@ -55,13 +55,11 @@ export default ({listRef}) => {
     const dispatch = useDispatch();
 
     const getData = async () => {
-        // console.log(search)
         if (chat.length === 0){
             const res = await axios.get("http://3.34.137.187:3002/chat");
             const chatData = await res.data.chats;
             await dispatch(addChat(chatData));
         } else {
-            console.log(chat[chat.length - 1].id)
             const res = await axios.get(`http://3.34.137.187:3002/chat/${chat[chat.length - 1].id}`)
             const chatData = await res.data.chats;
             await dispatch(addChat(chatData));

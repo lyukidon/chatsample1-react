@@ -36,7 +36,7 @@ const formStyle = css`
 `;
 
 export default ({ userId }) => {
-    const { register, handleSubmit, control, formState } = useForm();
+    const { register, handleSubmit, control, formState, reset } = useForm();
 
     const dispatch = useDispatch();
     const chat = useSelector((state) => state.chat);
@@ -55,6 +55,7 @@ export default ({ userId }) => {
         );
         const chatData = await res.data.chats;
         await dispatch(addChat(chatData));
+        reset();
     };
 
     return (
