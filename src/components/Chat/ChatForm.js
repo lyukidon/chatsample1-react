@@ -44,14 +44,14 @@ export default ({ userId }) => {
     const onSubmit = async (data) => {
         const { chatContent } = data;
         await axios
-            .post("http://localhost:3000/chat", {
+            .post("http://localhost:3002/chat", {
                 userId,
                 chatContent,
             })
             .catch((err) => console.error(err));
         await axios;
         const res = await axios.get(
-            `http://localhost:3000/chat/${chat[chat.length - 1].id}`
+            `http://localhost:3002/chat/${chat[chat.length - 1].id}`
         );
         const chatData = await res.data.chats;
         await dispatch(addChat(chatData));
